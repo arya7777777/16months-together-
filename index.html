@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>16 Months 🩷</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500;1,600&family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --rose:#ff8fbc;
+    --rose-deep:#e85b98;
+    --baby-pink:#ffc2dc;
+    --soft-pink:#ffd9e8;
+    --white:#ffffff;
+    --glass-tint: rgba(255,255,255,.14);
+    --glass-border: rgba(255,255,255,.55);
+    --mx:50%;
+    --my:35%;
+  }
+  *{ box-sizing:border-box; }
+  html,body{ margin:0; height:100%; }
+  body{
+    font-family:'Quicksand', sans-serif;
+    min-height:100vh;
+    color:#fff;
+    position:relative;
+    overflow-x:hidden;
+
+    /* ===== BACKGROUND PHOTO ===== replace BACKGROUND_IMAGE.jpg with your photo */
+    background-image:
+      linear-gradient(rgba(255,190,220,.15), rgba(255,170,210,.25)),
+      url("BACKGROUND_IMAGE.jpg");
+    background-size:cover;
+    background-position:center;
+    background-attachment:fixed;
+    background-color:var(--soft-pink);
+  }
+  /* fallback dreamy pink base sits behind whatever photo is added above */
+  body::before{
+    content:"";
+    position:fixed; inset:0; z-index:-2;
+    background:
+      radial-gradient(circle at 18% 12%, rgba(255,255,255,.55), transparent 45%),
+      radial-gradient(circle at 85% 18%, var(--baby-pink), transparent 50%),
+      radial-gradient(circle at 55% 95%, var(--rose), transparent 60%),
+      var(--soft-pink);
+  }
+  /* cinematic pink ambient bloom, slow breathing */
+  body::after{
+    content:"";
+    position:fixed; inset:0; z-index:-1;
+    background:radial-gradient(circle at 50% 30%, rgba(255,255,255,.35), transparent 60%);
+    animation:bloom 8s ease-in-out infinite;
+    pointer-events:none;
+  }
+  @keyframes bloom{
+    0%,100%{ opacity:.5; }
+    50%{ opacity:.9; }
+  }
+
+  /* ---------------- ambient particle layers ---------------- */
+  .fx-layer{ position:fixed; inset:0; z-index:1; pointer-events:none; overflow:hidden; }
+
+  .heart{
+    position:absolute; top:-8%;
+    color:#ff6fa8;
+    opacity:.8;
+    animation:fall linear infinite;
+    filter:drop-shadow(0 2px 4px rgba(220,90,150,.3));
+  }
+  .heart svg{ display:block; }
+  @keyframes fall{
+    0%{ transform:translateY(0) translateX(0) rotate(0deg); opacity:0; }
+    8%{ opacity:.85; }
+    92%{ opacity:.75; }
+    100%{ transform:translateY(112vh) translateX(var(--drift,20px)) rotate(200deg); opacity:0; }
+  }
+
+  .sparkle{
+    position:absolute;
+    width:4px; height:4px; border-radius:50%;
+    background:#fff;
+    box-shadow:0 0 8px 2px rgba(255,255,255,.9);
+    animation:twinkle ease-in-out infinite;
+  }
+  @keyframes twinkle{
+    0%,100%{ opacity:0; transform:scale(.6); }
+    50%{ opacity:1; transform:scale(1.3); }
+  }
+
+  .petal{
+    position:absolute; top:-8%;
+    animation:petalFall linear infinite;
+    opacity:.85;
+    filter:drop-shadow(0 2px 3px rgba(200,60,120,.25));
+  }
+  @keyframes petalFall{
+    0%{ transform:translateY(0) translateX(0) rotate(0deg); opacity:0; }
+    10%{ opacity:.85; }
+    50%{ transform:translateY(55vh) translateX(var(--sway,30px)) rotate(160deg); }
+    90%{ opacity:.7; }
+    100%{ transform:translateY(115vh) translateX(calc(var(--sway,30px) * -1)) rotate(320deg); opacity:0; }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .heart, .sparkle, .petal, body::after{ animation:none !important; display:none; }
+  }
+
+  /* ---------------- page layout ---------------- */
+  .wrap{
+    position:relative; z-index:2;
+    min-height:100vh;
+    display:flex; flex-direction:column; align-items:center;
+    padding:clamp(40px,8vh,80px) 20px 90px;
+  }
+
+  .eyebrow{
+    font-size:12px; letter-spacing:.42em; text-transform:uppercase;
+    color:#fff; font-weight:700; opacity:.9; margin-bottom:10px;
+    text-shadow:0 2px 12px rgba(200,50,110,.4);
+  }
+  h1.title{
+    font-family:'Playfair Display', serif;
+    font-weight:700; font-style:italic;
+    font-size:clamp(40px, 8vw, 76px);
+    margin:0 0 6px;
+    color:#fff;
+    text-shadow:0 3px 0 rgba(210,60,120,.3), 0 25px 55px rgba(210,60,120,.4);
+    text-align:center;
+  }
+  .title-sub{
+    font-family:'Cormorant Garamond', serif; font-style:italic; font-weight:500;
+    font-size:clamp(16px,3vw,22px);
+    color:#fff; text-shadow:0 2px 12px rgba(200,50,110,.4);
+    margin:0 0 clamp(36px,6vh,60px); text-align:center;
+  }
+
+  /* ---------------- Liquid Glass letter card ---------------- */
+  .glass-stage{
+    perspective:1800px;
+    width:100%;
+    max-width:700px;
+  }
+  .glow-behind{
+    position:absolute; inset:-10% -6%;
+    background:radial-gradient(circle at 50% 40%, rgba(255,143,188,.45), transparent 65%);
+    filter:blur(50px);
+    z-index:-1;
+    animation:glowBreathe 6s ease-in-out infinite;
+  }
+  @keyframes glowBreathe{
+    0%,100%{ opacity:.55; transform:scale(1); }
+    50%{ opacity:.9; transform:scale(1.05); }
+  }
+
+  .glass-card{
+    position:relative;
+    border-radius:38px;
+    transition:transform .25s cubic-bezier(.2,.7,.3,1);
+    transform-style:preserve-3d;
+    will-change:transform;
+    box-shadow:
+      0 70px 110px -35px rgba(190,40,110,.5),
+      0 25px 50px -20px rgba(190,40,110,.35);
+  }
+
+  .glass-inner{
+    position:relative;
+    border-radius:38px;
+    background:var(--glass-tint);
+    backdrop-filter:blur(28px) saturate(180%);
+    -webkit-backdrop-filter:blur(28px) saturate(180%);
+    padding:clamp(30px,6vw,64px);
+    overflow:hidden;
+    border:1px solid rgba(255,255,255,.35);
+    box-shadow:
+      inset 0 1.5px 0 rgba(255,255,255,.85),
+      inset 0 -1.5px 0 rgba(255,255,255,.12),
+      inset 1.5px 0 0 rgba(255,255,255,.3),
+      inset -1.5px 0 0 rgba(255,255,255,.08),
+      inset 0 0 60px rgba(255,255,255,.06);
+  }
+
+  /* moving specular highlight — follows the mouse via --mx / --my */
+  .glass-inner::before{
+    content:"";
+    position:absolute; inset:0;
+    background:radial-gradient(circle 280px at var(--mx) var(--my), rgba(255,255,255,.38), rgba(255,255,255,0) 65%);
+    pointer-events:none;
+    transition:background .05s linear;
+    z-index:0;
+  }
+  /* fixed curved edge reflection, top-left */
+  .glass-inner::after{
+    content:"";
+    position:absolute; top:-25%; left:-15%;
+    width:55%; height:65%;
+    background:radial-gradient(circle at 35% 35%, rgba(255,255,255,.32), rgba(255,255,255,0) 62%);
+    transform:rotate(-6deg);
+    pointer-events:none;
+    z-index:0;
+  }
+
+  .letter-heading{
+    position:relative; z-index:1;
+    text-align:center;
+    font-family:'Playfair Display', serif; font-weight:700; font-style:italic;
+    font-size:clamp(24px,4.5vw,36px);
+    color:#fff;
+    text-shadow:0 2px 16px rgba(150,10,70,.5);
+    margin:0 0 6px;
+  }
+  .letter-sub{
+    position:relative; z-index:1;
+    text-align:center; margin:0 0 32px;
+    font-size:12.5px; letter-spacing:.22em; text-transform:uppercase;
+    color:#ffe9f2; opacity:.9; font-weight:700;
+    text-shadow:0 2px 10px rgba(150,10,70,.45);
+  }
+
+  .letter-body{
+    position:relative; z-index:1;
+    font-family:'Cormorant Garamond', serif;
+    font-style:italic;
+    font-weight:500;
+    font-size:clamp(16.5px,2.4vw,20px);
+    line-height:2;
+    color:#fff;
+    text-shadow:0 2px 12px rgba(120,10,60,.5);
+    white-space:pre-wrap;
+    word-wrap:break-word;
+  }
+
+  .signoff{
+    position:relative; z-index:1;
+    text-align:center; margin-top:44px;
+  }
+  .signoff .heart-ic{ font-size:32px; }
+  .signoff p{
+    font-family:'Playfair Display', serif; font-style:italic; font-weight:700;
+    font-size:23px; margin:10px 0 0; color:#fff;
+    text-shadow:0 2px 16px rgba(150,10,70,.5);
+  }
+
+  footer{
+    position:relative; z-index:2;
+    text-align:center; padding:14px 20px 0;
+    font-size:12px; color:#fff; opacity:.85;
+    text-shadow:0 1px 8px rgba(180,30,90,.4);
+  }
+
+  @media (max-width:480px){
+    .wrap{ padding:36px 14px 70px; }
+    .glass-inner{ border-radius:30px; }
+    .glass-card{ border-radius:30px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="fx-layer" id="heartField" aria-hidden="true"></div>
+<div class="fx-layer" id="sparkleField" aria-hidden="true"></div>
+<div class="fx-layer" id="petalField" aria-hidden="true"></div>
+
+<div class="wrap">
+  <div class="eyebrow">happy</div>
+  <h1 class="title">16 Months 🩷</h1>
+  <p class="title-sub">My pyaru baby </p>
+
+  <div class="glass-stage">
+    <div style="position:relative;">
+      <div class="glow-behind"></div>
+      <div class="glass-card" id="glassCard">
+        <div class="glass-inner" id="glassInner">
+          <h2 class="letter-heading">For My Bubby</h2>
+          <p class="letter-sub">Happy 16 months of togetherness</p>
+
+          <div class="letter-body" id="letterBody"></div>
+
+          <div class="signoff">
+            <div class="heart-ic">🐥💗</div>
+            <p>I love you so much.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>Happy Anniversary Bubbyy</footer>
+</div>
+
+<script>
+const letterText = `Heyyy ... Helloooo bubbyyyyyyyy ..
+
+
+Oh  wait   
+
+
+/Start 
+.
+A ..:
+M
+
+Bubby
+F
+
+A ..:
+Hi
+
+How are you
+
+Bubby
+Hi
+
+I'm good
+
+Wbu
+
+A ..:
+I'm fine ✌🏼✌🏼
+
+Your Good Name?
+
+Bubby
+Glad to know✌️🏻✌️🏻✌️🏻
+
+My good name is very good
+
+A ..:
+Nice to meet you miss very good
+
+My name Is Very Very Good
+
+C'mon
+
+You silly girl
+
+Bubby
+Nice to meet you too very very good
+
+A ..:
+Where are you from
+
+?
+
+Bubby 
+🏠
+
+Wbu 
+
+
+😭😭😭😭😭😭😭😭 Hamare chatssss 
+
+Well nevermind. Ahm ahm ,...
+
+
+Ab to muje apse hi sharam aane lagi h 
+Aap to 🫣😳😳😳.  Bade ho rhe ho aur b 😳😳😳 ,😑😑😑 fir b baby hi ho mere samj aayi ,apko mat pta hai maine kitne dream dekhe h saath me kya kya plan krta hu 😋😋😋 tin tin tin surprise h m mat bolunga 😭 waai ab to log b bolte h tum dono ek jaise hi baat krte ho but aapke jitna cutu to m chaah ke b hone nhi walaa ,   kabi kabi thoda pinch krke dekh leta hu khud ko, ye real h,  sachme muje koi itna pyaar krta h? Muje to ajtak nhi mila trust me , kabi kabi sach me aisa lagta h I know it sounds weird but sometimes it feels like jab aap muje aise console kr rhe hote ho to lagta h ki baba ne muje apni chest pe rakh ke firse sulaya, bohot sukoon pyaar aur hope diya h aapne shuru se abi  jab m chats copy kr rha tha to maine apki recording suni , usme aapne khaa ki staarr apna khyaal rkhna breakfast and lunch dono Krna  🥺 itna kabi shayad kisi ne dhyan rkha ho aap bohot unique ho ekdam Rare  kismat walo ko aisi gf/wife milti h. Har ek ko maine rote hue dekha h ki unki gf unko preshan kr rhi h loyal nhi h etc etc   aur m sochta hu bhenchod ye inko hua kya h , mujhse pucho how lucky I am.  To have my little baby 🐥 princess my little fairy, Baby I know ham dono me cheeze theek nhi chal rhi m bohot badtamezi krne laga hu  , gusaa krne laga hu yes baby muje b aisa banna h jaisa m pehle tha , but idk kya ho rha h I promise m theek krunga khud ko.  Sudar lunga baby love and suno meri baat lovey m kabi apko chorke nhi jaunga love aapse breakup ka sochna b it's very difficult for me , to ye nhi hoga and things will get better I promise and babes m bas ye chahta hu aap apne Carrer ko aur health ko zyada priorities do because aapne already sabke liye apni carrer health ko sacrifice Kiya h sabne apse ye hi krvaya h intentionally ya unintentionally, wo m nhi chahta ab aap ye cheez ko continue rkho isiliye bas m thoda is baat ko leke serious hota hu baby aur kuchh nhi h, isse liye m irritate ho jata hu jab aap is baat pe n mazak krte ho hm sorryy my love abse m koshish krunga kabi b dil na dukhau aapka , meri pyaari si doll ka , kitna acha lgta h muje aapko bulate rehna jab b m apko awaaz lagata hu muje  hameshaa acha feel hota h realise hota h ki mere pass mera koi apna thank you universe for this m sach me pyaar krta hu lovey haan chize badal gyi h but sab track pe launga jaldi dekhna sab theek hoga my love my cutie potato .
+
+Ya allah m likhte likhte sogys. Tha I'm sorry Bubsss 
+
+Jaan maine ye website dubara bnaayi h wo sari file hi phone apne aap chalne lgaa uska acces hi nhi mila muje 
+
+
+Happy 16 months anniversary my love I love you really really really really really really really really really really really really really really really really really really really really really really really really really soooooooooooooooooooooooooooo much jaan.`;
+
+document.getElementById('letterBody').textContent = letterText;
+
+const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const isTouch = window.matchMedia('(pointer: coarse)').matches;
+
+/* ---------- falling hearts ---------- */
+function heartSVG(size, color){
+  return `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="${color}">
+    <path d="M12 21s-6.7-4.35-9.3-8.1C.9 10.1 1.5 6.6 4.4 5.1 6.6 4 9 4.7 12 7.4c3-2.7 5.4-3.4 7.6-2.3 2.9 1.5 3.5 5 1.7 7.8C18.7 16.65 12 21 12 21z"/>
+  </svg>`;
+}
+if(!reduceMotion){
+  const heartField = document.getElementById('heartField');
+  const colors = ['#ff5fa2','#ff8fc0','#ffb6d9','#ff3f8a'];
+  const heartCount = window.innerWidth < 600 ? 22 : 36;
+  for(let i=0;i<heartCount;i++){
+    const h = document.createElement('span');
+    h.className = 'heart';
+    const size = 9 + Math.random()*13;
+    h.innerHTML = heartSVG(size, colors[Math.floor(Math.random()*colors.length)]);
+    h.style.left = Math.random()*100 + 'vw';
+    h.style.setProperty('--drift', (Math.random()*60-30) + 'px');
+    h.style.animationDuration = (10 + Math.random()*12) + 's';
+    h.style.animationDelay = (Math.random()*12) + 's';
+    heartField.appendChild(h);
+  }
+
+  /* ---------- floating sparkles ---------- */
+  const sparkleField = document.getElementById('sparkleField');
+  const sparkleCount = window.innerWidth < 600 ? 18 : 30;
+  for(let i=0;i<sparkleCount;i++){
+    const s = document.createElement('span');
+    s.className = 'sparkle';
+    s.style.left = Math.random()*100 + 'vw';
+    s.style.top = Math.random()*100 + 'vh';
+    s.style.animationDuration = (3 + Math.random()*4) + 's';
+    s.style.animationDelay = (Math.random()*5) + 's';
+    sparkleField.appendChild(s);
+  }
+
+  /* ---------- flower petals ---------- */
+  const petalField = document.getElementById('petalField');
+  const petalEmojis = ['🌸','🌷','🌺'];
+  const petalCount = window.innerWidth < 600 ? 10 : 16;
+  for(let i=0;i<petalCount;i++){
+    const p = document.createElement('span');
+    p.className = 'petal';
+    p.textContent = petalEmojis[Math.floor(Math.random()*petalEmojis.length)];
+    p.style.left = Math.random()*100 + 'vw';
+    p.style.fontSize = (14 + Math.random()*12) + 'px';
+    p.style.setProperty('--sway', (20 + Math.random()*50) + 'px');
+    p.style.animationDuration = (14 + Math.random()*10) + 's';
+    p.style.animationDelay = (Math.random()*14) + 's';
+    petalField.appendChild(p);
+  }
+}
+
+/* ---------- moving glass reflection + gentle 3D tilt, follows the mouse ---------- */
+const stage = document.querySelector('.glass-stage');
+const card = document.getElementById('glassCard');
+const inner = document.getElementById('glassInner');
+
+if(!isTouch && !reduceMotion){
+  stage.addEventListener('mousemove', (e)=>{
+    const rect = stage.getBoundingClientRect();
+    const px = (e.clientX - rect.left) / rect.width;
+    const py = (e.clientY - rect.top) / rect.height;
+
+    inner.style.setProperty('--mx', (px*100) + '%');
+    inner.style.setProperty('--my', (py*100) + '%');
+
+    const rx = (py - 0.5) * -8;
+    const ry = (px - 0.5) * 8;
+    card.style.transform = `rotateX(${rx}deg) rotateY(${ry}deg)`;
+  });
+  stage.addEventListener('mouseleave', ()=>{
+    card.style.transform = 'rotateX(0) rotateY(0)';
+    inner.style.setProperty('--mx', '50%');
+    inner.style.setProperty('--my', '35%');
+  });
+} else {
+  /* gentle idle drift of the highlight on touch devices so the glass still feels alive */
+  let t = 0;
+  if(!reduceMotion){
+    setInterval(()=>{
+      t += 0.02;
+      inner.style.setProperty('--mx', (50 + Math.sin(t)*18) + '%');
+      inner.style.setProperty('--my', (35 + Math.cos(t*0.8)*12) + '%');
+    }, 60);
+  }
+}
+</script>
+
+</body>
+</html>
